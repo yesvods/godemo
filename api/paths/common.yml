@@ -1,0 +1,71 @@
+swagger: "2.0"
+info:
+  title: allaboutapps.dev/aw/go-starter
+  version: 0.1.0
+paths:
+  /swagger.yml:
+    get:
+      summary: Get swagger.yml
+      operationId: GetSwaggerRoute
+      produces:
+        - text/plain
+      description: |-
+        OpenAPI Specification ver. 2 (fka Swagger)
+        Returns our handcrafted and validated `swagger.yml`.
+      tags:
+        - common
+      responses:
+        "200":
+          description: OK
+  /-/ready:
+    get:
+      summary: Get ready (readiness probe)
+      operationId: GetReadyRoute
+      produces:
+        - text/plain
+      description: |-
+        This endpoint returns 200 when the service is ready to serve traffic.
+        Does read-only probes apart from the general server ready state.
+        Note that /-/ready is typically public (and not shielded by a mgmt-secret), we thus prevent information leakage here and only return `"Ready."`.
+      tags:
+        - common
+      responses:
+        "200":
+          description: Ready.
+        "521":
+          description: Not ready.
+  /-/healthy:
+    get:
+      security:
+        - Management: []
+      summary: Get healthy (liveness probe)
+      operationId: GetHealthyRoute
+      produces:
+        - text/plain
+      description: |-
+        This endpoint returns 200 when the service is healthy.
+        Returns an human readable string about the current service status.
+        In addition to readiness probes, it performs actual write probes.
+        Note that /-/healthy is private (shielded by the mgmt-secret) as it may expose sensitive information about your service.
+      tags:
+        - common
+      responses:
+        "200":
+          description: Ready.
+        "521":
+          description: Not ready.
+  /-/version:
+    get:
+      security:
+        - Management: []
+      summary: Get version
+      operationId: GetVersionRoute
+      produces:
+        - text/plain
+      description: |-
+        This endpoint returns the module name, commit and build-date baked into the app binary.
+      tags:
+        - common
+      responses:
+        "200":
+          description: "ModuleName @ Commit (BuildDate)"

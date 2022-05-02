@@ -1,0 +1,42 @@
+# based on https://github.com/github/gitignore/blob/master/Go.gitignore
+
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# GOBIN
+bin
+
+# local go mod cache
+.pkg
+
+# temporary files
+tmp
+
+# mac specific
+.DS_Store
+
+# directory for rw files (PV mounted into the container)
+# /assets/mnt folder should stay gitignored!
+assets/mnt/**
+!assets/mnt/.gitkeep
+dumps
+
+# go debug / delve
+__debug_bin
+
+# we support overloading ENV vars by parsing a dotenv formatted file
+# this file can be used for local testing (secrets!) but should never be commited into git
+.env.local

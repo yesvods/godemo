@@ -1,0 +1,40 @@
+# This is our base swagger file and the primary mixin target.
+# Everything in definitions|paths/*.yml will be mixed through
+# and finally flattened into the actual swagger.yml in this dir.
+consumes:
+  - application/json
+produces:
+  - application/json
+swagger: "2.0"
+info:
+  title: allaboutapps.dev/aw/go-starter
+  version: 0.1.0
+  description: API documentation
+paths: {}
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: |-
+      Access token for application access, **must** include "Bearer " prefix.
+      Example: `Bearer b4a94a42-3ea2-4af3-9699-8bcbfee6e6d2`
+    x-keyPrefix: "Bearer "
+  Management:
+    type: apiKey
+    in: query
+    description: Management secret, used for monitoring and infrastructure related calls
+    name: mgmt-secret
+definitions:
+  # Any definitions that are not yet used within paths/*.yml are automatically removed from the resulting swagger.yml.
+  # You may reference some definitions that you *always* want to be included here.
+  # --
+  # Always include nullables so we can test deserialization
+  nullables:
+    $ref: "../definitions/nullable.yml#/definitions/Nullables"
+  # Always include orderDir so we can test binding it to db queries directly.
+  orderDir:
+    type: string
+    enum:
+      - asc
+      - desc

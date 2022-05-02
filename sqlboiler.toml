@@ -1,0 +1,10 @@
+wipe = true
+no-hooks = true
+output = "internal/models"
+
+[psql]
+    # Connection params are injected via env vars (PSQL_*)
+    # As those are supplied via the env, you cannot overwrite the here!
+    # see https://github.com/volatiletech/sqlboiler/issues/678
+    # see https://github.com/volatiletech/sqlboiler/pull/615
+    blacklist = ["migrations"]
